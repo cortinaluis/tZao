@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./index.css">
+    <script>
+        let fullText = '';
+        let currentWordNumbers = '';
+        let currentWord = '';
+
+        const fetchPartial = async (partial) => {
+            const result = await fetch(`http://localhost:3000/partials/${partial}`, { method: 'get' });
+            return result.json();
+        }
+
+        const handleClick = async (number) => {
+            if (number === '0') {
+                fullText += ` ${currentWord}`;
+                currentWordNumbers = '';
+                currentWord = '';
+                document.getElementById('fullText').value = fullText;
+                document.getElementById('userInput').value = '';
+                return;
+            }
+
+            currentWordNumbers += number;
+            const partial = await fetchPartial(currentWordNumbers);
+            if (partial.length) {
+                currentWord = partial[0];
+                document.getElementById('userInput').value = partial;
+            }
+        }
+
+    </script>
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" id="userInput" style="width: 300px"/>
+    <input type="text" id="fullText" style="width: 300px"/>
+    <ul class="keypad">
+        <ul class="row">
+            <li>
+                <button onclick="handleClick('1')">
+                    <b>1</b>
+                    <p>!?#</p>
+                </button>
+            </li>
+            <li>
+                <button onclick="handleClick('2')">
+                    <b>2</b>
+                    <p>abc</p>
+                </button>
+            </li>
+            <li>
+                <button onclick="handleClick('3')">
+                    <b>3</b>
+                    <p>def</p>
+                </button>
+            </li>
+        </ul>
+        <ul class="row">
+            <li>
+                <button onclick="handleClick('4')">
+                    <b>4</b>
+                    <p>ghi</p>
+                </button>
+            </li>
+            <li>
+                <button onclick="handleClick('5')">
+                    <b>5</b>
+                    <p>jkl</p>
+                </button>
+            </li>
+            <li>
+                <button onclick="handleClick('6')">
+                    <b>6</b>
+                    <p>mno</p>
+                </button>
+            </li>
+        </ul>
+        <ul class="row">
+            <li>
+                <button onclick="handleClick('7')">
+                    <b>7</b>
+                    <p>pqrs</p>
+                </button>
+            </li>
+            <li>
+                <button onclick="handleClick('8')">
+                    <b>8</b>
+                    <p>tuv</p>
+                </button>
+            </li>
+            <li>
+                <button onclick="handleClick('9')">
+                    <b>9</b>
+                    <p>wxyz</p>
+                </button>
+            </li>
+        </ul>
+        <ul class="row">
+            <li><button onclick="handleClick('*')">*</button></li>
+            <li><button onclick="handleClick('0')">0</button></li>
+            <li><button onclick="handleClick('#')">#</button></li>
+        </ul>
+    </ul>
+</body>
+
+</html>

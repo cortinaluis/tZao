@@ -1,0 +1,15 @@
+.keypad {
+    display: grid;
+}
+
+.row {
+    display: grid;
+    list-style: none;
+    grid-template-columns: 100px 100px 100px;
+}
+
+button {
+    width: 100px;
+    height: 100px;
+}
+
