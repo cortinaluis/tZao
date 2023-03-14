@@ -8,8 +8,8 @@ const handleGetPartial = (dictionary) => (req, res) => {
     }
 
     if (matchesStartingWithPartial.length > 3) {
-        const reducedSubset = dictionary.getFirstWordForEachFirstLetter(matchesStartingWithPartial);
-        console.log(`more than 3 (${matchesStartingWithPartial.length}) partials found. subset ->`, reducedSubset);
+        const reducedSubset = dictionary.getWordsForEachFirstLetter(matchesStartingWithPartial, 2);
+        console.log(`more than 3 (${matchesStartingWithPartial.length}) partials found. subset for ${partial} ->`, reducedSubset);
         return res.json(reducedSubset);
     }
 

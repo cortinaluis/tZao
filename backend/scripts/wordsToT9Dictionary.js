@@ -14,7 +14,9 @@ const generateT9Dictionary = (words) => {
         if (!t9Dictionary[transformedWord]) {
             t9Dictionary[transformedWord] = [lowercaseWord];
         } else {
-            t9Dictionary[transformedWord].push(lowercaseWord);
+            if (!t9Dictionary[transformedWord].includes(lowercaseWord)) {
+                t9Dictionary[transformedWord].push(lowercaseWord);
+            }
         }
     });
 

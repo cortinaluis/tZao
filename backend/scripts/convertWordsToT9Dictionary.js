@@ -1,6 +1,11 @@
 
 const inquirer = require('inquirer');
-const { loadDictionaryNames, extractWordsArrayFromFile, generateT9Dictionary, saveT9DictionaryToFile } = require('./wordsToT9Dictionary');
+const {
+    loadDictionaryNames,
+    extractWordsArrayFromFile,
+    generateT9Dictionary,
+    saveT9DictionaryToFile
+} = require('./wordsToT9Dictionary');
 
 (async () => {
     const dictionaries = loadDictionaryNames();

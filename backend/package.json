@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "test": "jest",
-    "generate:dictionary": "node wordsToT9Dictionary.js",
+    "generate:dictionary": "node scripts/convertWordsToT9Dictionary.js",
     "dev": "nodemon app.js"
   },
   "author": "cortinaluis.dev@gmail.com",

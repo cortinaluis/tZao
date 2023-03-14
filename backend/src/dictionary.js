@@ -1,11 +1,12 @@
 const fs = require('fs');
 const path = require('path');
+const { keyDictionary, keypad } = require('./types/keyboard');
 
 class Dictionary {
     constructor(filePath) {
         const file = fs.readFileSync(path.join(__dirname, filePath), 'utf-8');
         const dictionary = JSON.parse(file);
-        
+
         this.dictionaryEntries = {};
         Object.entries(dictionary).forEach(([k, v]) => {
             this.dictionaryEntries[k] = v;
@@ -24,18 +25,27 @@ class Dictionary {
         );
     }
 
-    getFirstWordForEachFirstLetter(words) {
-        const matches = [];
-        const processedLetters = [];
-        words.forEach((word) => {
-            const firstLetter = word[0];
-            if (!processedLetters.includes(firstLetter)) {
-                matches.push(word);
-                processedLetters.push(firstLetter);
-            }
-        });
+    getWordsForEachFirstLetter(words, matchesPerLetter) {
+        const firstLetter = words[0][0];
+        const possibleLetters = keypad[keyDictionary[firstLetter]];
+        const alphaWords = words.sort();
 
-        return this.sortWordsByCharacterCount(matches);
+        // for each letter, generate an array of words
+        const wordsPerLetter = {};
+        for (const word of alphaWords) {
+            const wordFirstLetter = word[0];
+            if (possibleLetters.includes(wordFirstLetter)) {
+                if (!wordsPerLetter[wordFirstLetter]) {
+                    wordsPerLetter[wordFirstLetter] = [word];
+                } else {
+                    wordsPerLetter[wordFirstLetter].push(word);
+                }
+            }
+        }
+        return this.sortWordsByCharacterCount(Object.values(wordsPerLetter)
+            .map(
+                (words) => this.sortWordsByCharacterCount(words).slice(0, matchesPerLetter)
+            ).flat(1));
     }
 
     sortWordsByCharacterCount(words) {

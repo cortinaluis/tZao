@@ -25,17 +25,24 @@ describe('Dictionary class', () => {
         });
     });
 
-    describe('getFirstWordForEachFirstLetter', () => {
-        it('returns first found word for each first letter in words', () => {
+    describe('getWordsForEachFirstLetter', () => {
+        it.each(
+            [
+                { matchesPerLetter: 1, expected: ['ruin', 'store'] },
+                { matchesPerLetter: 2, expected: ['ruin', 'store', 'scream'] },
+            ]
+        )('returns max $matchesPerLetter words per letter', ({ matchesPerLetter, expected }) => {
             const wordsStartingWith7 = dictionary.getWordsStartingWith("7");
-            expect(dictionary.getFirstWordForEachFirstLetter(wordsStartingWith7)).toEqual(['ruin', 'store']);
+            expect(
+                dictionary.getWordsForEachFirstLetter(wordsStartingWith7, matchesPerLetter)
+            ).toEqual(expected);
         });
     });
 
     describe('sortWordsByCharacterCount', () => {
         it('sorts words by character count', () => {
             const words = ['small', 'big'];
-            expect(dictionary.sortWordsByCharacterCount(words)).toEqual(['big', 'small'])
-        })
-    })
+            expect(dictionary.sortWordsByCharacterCount(words)).toEqual(['big', 'small']);
+        });
+    });
 });
